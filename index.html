@@ -1,0 +1,598 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>VibCon Phase 1 Notes</title>
+<style>:root{color-scheme:light dark}*,*::before,*::after{box-sizing:border-box}html{-webkit-text-size-adjust:100%}body{margin:0;font:15px/1.6 system-ui,-apple-system,Segoe UI,sans-serif}img,svg,video{max-width:100%;height:auto}button,input,select,textarea{font:inherit;color:inherit}table{border-collapse:collapse}[hidden]{display:none!important}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+ --paper:#f4f3f0;--card:#fff;--ink:#16150f;--ink2:#524e46;--ink3:#8a8277;
+ --rule:#e1ddd4;--rule2:#c7c0b5;--acc:#1b4f72;--accbg:#e9eef3;
+ --ok:#2b6b45;--okbg:#e6f0e9;--warn:#8a6210;--warnbg:#f8efd9;
+ --bad:#a33225;--badbg:#f9e6e2;--night:#243447;--day:#f0d9a0;
+ --s-bg:#f6f4f1;--s-ink:#17150f;--s-mut:#857c6e;--s-sub:#5e574c;
+ --s-boxf:#fff;--s-boxs:#ded7cb;--s-edgef:#eef1f6;--s-edges:#41618f;
+ --s-dbf:#e6f0e9;--s-dbs:#2b6b45;--s-objf:#e8eefa;--s-objs:#2d62ad;
+ --s-apif:#fdf0dc;--s-apis:#a87a1e;--s-nof:#fae8e5;--s-nos:#a73a2f;--s-ln:#9b9183;
+ --body:"Inter",ui-sans-serif,-apple-system,sans-serif;
+ --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+ --paper:#111110;--card:#1a1917;--ink:#eeeae4;--ink2:#aea89f;--ink3:#827a71;
+ --rule:#2c2926;--rule2:#403b35;--acc:#7fb0dc;--accbg:#17232e;
+ --ok:#78b98a;--okbg:#15251a;--warn:#d5a547;--warnbg:#272013;
+ --bad:#e08575;--badbg:#2b1715;--night:#0d1620;--day:#8a7034;
+ --s-bg:#121110;--s-ink:#ece8e2;--s-mut:#9c9287;--s-sub:#9c9287;
+ --s-boxf:#1c1a17;--s-boxs:#332f29;--s-edgef:#141c28;--s-edges:#6d90c4;
+ --s-dbf:#132419;--s-dbs:#4e9169;--s-objf:#13203a;--s-objs:#5a8fd6;
+ --s-apif:#2a2113;--s-apis:#c09a40;--s-nof:#2a1614;--s-nos:#c25a4e;--s-ln:#5c554c;
+}}
+:root[data-theme="dark"]{
+ --paper:#111110;--card:#1a1917;--ink:#eeeae4;--ink2:#aea89f;--ink3:#827a71;
+ --rule:#2c2926;--rule2:#403b35;--acc:#7fb0dc;--accbg:#17232e;
+ --ok:#78b98a;--okbg:#15251a;--warn:#d5a547;--warnbg:#272013;
+ --bad:#e08575;--badbg:#2b1715;--night:#0d1620;--day:#8a7034;
+ --s-bg:#121110;--s-ink:#ece8e2;--s-mut:#9c9287;--s-sub:#9c9287;
+ --s-boxf:#1c1a17;--s-boxs:#332f29;--s-edgef:#141c28;--s-edges:#6d90c4;
+ --s-dbf:#132419;--s-dbs:#4e9169;--s-objf:#13203a;--s-objs:#5a8fd6;
+ --s-apif:#2a2113;--s-apis:#c09a40;--s-nof:#2a1614;--s-nos:#c25a4e;--s-ln:#5c554c;
+}
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.6 var(--body);-webkit-text-size-adjust:100%}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px 60px}
+header{border-bottom:1px solid var(--rule);background:var(--card)}
+.hin{max-width:1080px;margin:0 auto;padding:13px 20px;display:flex;gap:14px;align-items:baseline;flex-wrap:wrap}
+.brand{font:800 14px var(--body);letter-spacing:.16em;text-transform:uppercase}
+.meta{font:500 11px var(--mono);color:var(--ink3);text-transform:uppercase;letter-spacing:.03em}
+.spacer{flex:1}
+.tgl{background:none;border:1px solid var(--rule2);border-radius:999px;padding:5px 13px;font:500 12px var(--body);cursor:pointer;color:var(--ink2)}
+.banner{background:var(--accbg);border:1px solid color-mix(in srgb,var(--acc) 34%,transparent);border-radius:8px;padding:11px 14px;margin:18px 0 0;font-size:13px;color:var(--ink2)}
+.banner b{color:var(--ink)}
+nav{display:flex;gap:2px;margin:20px 0 0;border-bottom:1px solid var(--rule);overflow-x:auto}
+nav button{background:none;border:0;border-bottom:2px solid transparent;padding:10px 14px;cursor:pointer;color:var(--ink3);font:600 13.5px var(--body);white-space:nowrap}
+nav button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--acc)}
+h2{font:700 25px/1.2 var(--body);letter-spacing:-.02em;margin:26px 0 6px}
+h3{font:600 11px var(--body);margin:26px 0 9px;color:var(--ink3);text-transform:uppercase;letter-spacing:.1em}
+.note{color:var(--ink2);font-size:13.5px;margin:0 0 14px;max-width:74ch}
+.card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:20px}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.scroll table{min-width:560px}
+table{width:100%;border-collapse:collapse;font:400 13px/1.5 var(--body)}
+th{text-align:left;font:600 10px var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);padding:0 10px 9px;border-bottom:1px solid var(--rule2)}
+td{padding:9px 10px;border-bottom:1px solid var(--rule);vertical-align:top}
+td.n{text-align:right;font-family:var(--mono);font-size:12.5px;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+tr.hl td{background:var(--accbg)}
+.stats{display:grid;gap:10px;grid-template-columns:repeat(2,1fr)}
+@media(min-width:700px){.stats{grid-template-columns:repeat(4,1fr)}}
+.stat{background:var(--card);border:1px solid var(--rule);border-radius:8px;padding:13px}
+.big{font:700 26px/1 var(--body);letter-spacing:-.02em}
+.bigl{font:600 10px/1.3 var(--body);text-transform:uppercase;letter-spacing:.07em;color:var(--ink3);margin-top:7px}
+.verdict{border-radius:8px;padding:12px 14px;font-size:13px;margin-top:12px;line-height:1.6}
+.v-ok{background:var(--okbg);border:1px solid color-mix(in srgb,var(--ok) 38%,transparent)}
+.v-bad{background:var(--badbg);border:1px solid color-mix(in srgb,var(--bad) 38%,transparent)}
+pre{font:500 12px/1.6 var(--mono);background:var(--paper);border:1px solid var(--rule);border-radius:8px;padding:13px 15px;overflow:auto;margin:10px 0;white-space:pre}
+code{font:500 12.5px var(--mono);background:var(--paper);border:1px solid var(--rule);border-radius:4px;padding:1px 5px}
+ul{margin:10px 0;padding-left:20px}li{margin:6px 0;color:var(--ink2);font-size:13.5px}li b{color:var(--ink)}
+blockquote{margin:12px 0;padding:11px 16px;border-left:3px solid var(--acc);background:var(--card);font-size:13.5px;border-radius:0 6px 6px 0;color:var(--ink2)}
+blockquote b{color:var(--ink)}
+/* day timeline */
+.tl{position:relative;height:62px;border-radius:7px;overflow:hidden;border:1px solid var(--rule2);margin:14px 0 4px}
+.tl .seg{position:absolute;top:0;bottom:0}
+.tl .night{background:var(--night)}
+.tl .day{background:var(--day)}
+.tl .armed{position:absolute;top:0;height:16px;background:color-mix(in srgb,var(--acc) 72%,transparent)}
+.tl .errD{position:absolute;top:16px;height:22px;background:repeating-linear-gradient(45deg,var(--warn),var(--warn) 4px,transparent 4px,transparent 8px);opacity:.92}
+.tl .errN{position:absolute;top:38px;height:24px;background:repeating-linear-gradient(45deg,var(--bad),var(--bad) 4px,transparent 4px,transparent 8px);opacity:.92}
+.ticks{display:flex;justify-content:space-between;font:500 10px var(--mono);color:var(--ink3);margin-bottom:12px}
+.key{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--ink2);margin:8px 0 0}
+.key i{display:inline-block;width:13px;height:11px;border-radius:2px;vertical-align:-1px;margin-right:5px}
+.ctl{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin:10px 0 0}
+input[type=range]{flex:1;min-width:200px;accent-color:var(--acc)}
+input[type=date]{font:500 13px var(--mono);padding:7px 9px;border:1px solid var(--rule2);border-radius:6px;background:var(--card);color:var(--ink)}
+.svgfig{border:1px solid var(--rule);border-radius:10px;overflow:hidden;margin:10px 0}
+.svgfig .bg{fill:var(--s-bg)}
+.svgfig text{font-family:var(--body);fill:var(--s-ink)}
+.svgfig .mono{font-family:var(--mono)}
+.svgfig .h1{font-size:18px;font-weight:700}
+.svgfig .h2{font-size:12px;font-weight:700}
+.svgfig .lbl{font-size:12.5px;font-weight:600}
+.svgfig .col{font-size:10.5px;font-weight:700;letter-spacing:.09em;fill:var(--s-mut)}
+.svgfig .sub{font-size:10.5px;fill:var(--s-sub)}
+.svgfig .box{fill:var(--s-boxf);stroke:var(--s-boxs);stroke-width:1.2}
+.svgfig .edge{fill:var(--s-edgef);stroke:var(--s-edges);stroke-width:1.5}
+.svgfig .db{fill:var(--s-dbf);stroke:var(--s-dbs);stroke-width:1.6}
+.svgfig .obj{fill:var(--s-objf);stroke:var(--s-objs);stroke-width:1.6}
+.svgfig .api{fill:var(--s-apif);stroke:var(--s-apis);stroke-width:1.5}
+.svgfig .no{fill:var(--s-nof);stroke:var(--s-nos);stroke-width:1.5}
+.svgfig .ln{stroke:var(--s-ln);stroke-width:1.4;fill:none;marker-end:url(#vc)}
+#vc path{fill:var(--s-ln)}
+footer{margin-top:34px;padding-top:16px;border-top:1px solid var(--rule);color:var(--ink3);font-size:12px}
+</style>
+</head>
+<body>
+<header><div class="hin">
+ <span class="brand">Harestua</span>
+ <span class="meta">phase 1 notes &middot; 4 nov 2026</span>
+ <span class="spacer"></span><button class="tgl" id="theme">dark</button>
+</div></header>
+
+<div class="wrap">
+<div class="banner"><b>Nothing here is a measurement of your system.</b> I have no access to
+it. Everything is either computed from public astronomy at your site's coordinates, read
+from a vendor datasheet, or arithmetic on assumptions I have labelled as assumptions. The
+code that produces every number is in the package and runs with no dependencies.</div>
+
+<nav role="tablist">
+ <button role="tab" id="t1" aria-selected="true"  aria-controls="p1">The 18:00 problem</button>
+ <button role="tab" id="t2" aria-selected="false" aria-controls="p2">Phase 1 storage</button>
+ <button role="tab" id="t3" aria-selected="false" aria-controls="p3">Architecture</button>
+ <button role="tab" id="t4" aria-selected="false" aria-controls="p4">Hardware &amp; NS 8141</button>
+ <button role="tab" id="t5" aria-selected="false" aria-controls="p5">Phase 1 scope</button>
+</nav>
+
+<!-- ============ SOLAR ============ -->
+<section id="p1" role="tabpanel" aria-labelledby="t1">
+<h2>A wall clock cannot tell you when it is dark at 60 degrees north</h2>
+<blockquote>"sensors must enter a trigger-pause between 06:30 and 18:00 local time... The
+system must automatically arm itself between <b>18:00 and 06:30</b>."</blockquote>
+<p class="note">That is a wall clock standing in for darkness. At Harestua the two have
+almost nothing to do with each other, and it fails in <b>opposite directions</b> in
+summer and winter.</p>
+
+<div class="card">
+ <div class="ctl">
+  <input type="date" id="d" value="2026-06-21" min="2026-01-01" max="2026-12-31">
+  <input type="range" id="slider" min="0" max="364" value="171">
+ </div>
+ <div class="tl" id="tl"></div>
+ <div class="ticks"><span>00:00</span><span>06:00</span><span>12:00</span><span>18:00</span><span>24:00</span></div>
+ <div class="verdict" id="sv"></div>
+ <div class="key">
+  <span><i style="background:var(--night)"></i>night</span>
+  <span><i style="background:var(--day)"></i>daylight</span>
+  <span><i style="background:color-mix(in srgb,var(--acc) 72%,transparent)"></i>armed, per their spec</span>
+  <span><i style="background:var(--warn)"></i>floodlights armed in daylight</span>
+  <span><i style="background:var(--bad)"></i>dark, perimeter disarmed</span>
+ </div>
+ <p class="note" style="margin:14px 0 0">Drag through the year. The two striped bands are
+ the error, and they never both vanish.</p>
+</div>
+
+<h3>Across a full year at your coordinates</h3>
+<div class="stats">
+ <div class="stat"><div class="big">896 h</div><div class="bigl">armed while the sun is up</div></div>
+ <div class="stat"><div class="big">572 h</div><div class="bigl">dark, perimeter disarmed</div></div>
+ <div class="stat"><div class="big">7.4 h</div><div class="bigl">worst day, 21 June</div></div>
+ <div class="stat"><div class="big">5.7 h</div><div class="bigl">worst day, 22 December</div></div>
+</div>
+
+<div class="verdict v-bad" style="margin-top:14px"><b>The 572 is the one that matters.</b>
+A perimeter system that is disarmed for 572 hours of darkness a year is a perimeter system
+during office hours. The 896 is wasted floodlighting and annoyed neighbours; the 572 is
+the thing it was built to prevent.</div>
+
+<h3>The fix, and why it belongs in Phase 1</h3>
+<pre>  ARM    = civil dusk  (sun crosses -6 deg, descending)  + site offset
+  DISARM = civil dawn  (sun crosses -6 deg, ascending)</pre>
+<p class="note">Derived per day from latitude and longitude, so it is correct at any site
+you add without anyone editing a schedule. Norway also runs CET and CEST, so "18:00 local"
+is two different solar moments depending on the month, and the error above is not even
+stable across the year.</p>
+<p class="note"><b>This is Phase 3 and you are funding Phase 1.</b> I raise it now because
+it is a schema decision: the <code>site</code> table has to carry coordinates from day
+one. That costs nothing now and is a migration later.</p>
+</section>
+
+<!-- ============ STORAGE ============ -->
+<section id="p2" role="tabpanel" aria-labelledby="t2" hidden>
+<h2>Your requirement 1 and your requirement 2 pull against each other</h2>
+<blockquote><b>1.</b> "...handle extreme, concurrent time-series ingestion strings without
+truncation or <b>performance lag</b>."<br><br>
+<b>2.</b> "...the 5 core telemetry compliance channels: mm/s, m/s², Hz, full Fast Fourier
+Transform arrays, and peak amplitudes, <b>including raw time-series waveform files</b>."</blockquote>
+<p class="note">Requirement 2 puts two completely different data shapes in one list.
+Requirement 1 then rules out what happens when you store them together.</p>
+
+<h3>Shape A: scalar telemetry. This is what a hypertable is for.</h3>
+<div class="card" style="padding:0"><div class="scroll"><table>
+<thead><tr><th>Column</th><th>Type</th><th class="n">Bytes</th></tr></thead>
+<tbody>
+<tr><td>device_id</td><td class="n">uuid</td><td class="n">16</td></tr>
+<tr><td>ts</td><td class="n">timestamptz, microsecond</td><td class="n">8</td></tr>
+<tr><td>battery_pct</td><td class="n">smallint</td><td class="n">2</td></tr>
+<tr><td>ppv_mm_s, accel_m_s2, dom_freq_hz, peak_amp</td><td class="n">real &times; 4</td><td class="n">16</td></tr>
+<tr><td>ori_x, ori_y, ori_z</td><td class="n">real &times; 3</td><td class="n">12</td></tr>
+<tr><td>row overhead</td><td class="n"></td><td class="n">~24</td></tr>
+<tr class="hl"><td><b>one row</b></td><td class="n"></td><td class="n"><b>~78 B</b></td></tr>
+</tbody></table></div></div>
+<p class="note" style="margin-top:12px">50 devices at 1 Hz is about <b>123 GB/year</b>
+uncompressed and roughly <b>12 GB/year</b> after columnar compression. Routine.</p>
+
+<h3>Shape B: FFT arrays and raw waveforms. This is not.</h3>
+<div class="card" style="padding:0"><div class="scroll"><table>
+<thead><tr><th class="n">Rate</th><th class="n">Event</th><th class="n">Samples, 3 axes</th><th class="n">Raw float32</th><th class="n">FFT</th></tr></thead>
+<tbody>
+<tr><td class="n">1024 Hz</td><td class="n">5 s</td><td class="n">15,360</td><td class="n">0.06 MB</td><td class="n">6 kB</td></tr>
+<tr><td class="n">1024 Hz</td><td class="n">30 s</td><td class="n">92,160</td><td class="n">0.37 MB</td><td class="n">6 kB</td></tr>
+<tr><td class="n">4096 Hz</td><td class="n">5 s</td><td class="n">61,440</td><td class="n">0.25 MB</td><td class="n">25 kB</td></tr>
+<tr class="hl"><td class="n">4096 Hz</td><td class="n">30 s</td><td class="n">368,640</td><td class="n"><b>1.47 MB</b></td><td class="n">25 kB</td></tr>
+</tbody></table></div></div>
+<pre>  1.47 MB  x  20 events/day  x  50 sensors  x  365  =  536 GB / year</pre>
+<p class="note">against 12 GB of compressed telemetry. The bulk data is <b>forty times</b>
+the size of the thing the database is good at. <i>These are sizing assumptions, not
+measurements of your system. I do not know your sample rate, event length or sensor
+count, and those three answers change every number above.</i></p>
+
+<div class="verdict v-bad"><b>What that does inside PostgreSQL.</b> Any value over about
+2 kB is moved out of line into a TOAST table. A 1.47 MB waveform becomes several hundred
+TOAST chunks in a side relation. TimescaleDB compression cannot reach them. Vacuum, backup
+and restore all carry the bulk even for queries that never select a waveform. Chunk pruning
+stops helping. A 160 GB Droplet holds about three months of it and nothing else.</div>
+
+<h3>The split</h3>
+<pre>  waveform_sha256   bytea(32)   &lt;- the object key AND the integrity record
+  waveform_bytes    integer
+  waveform_uri      text        &lt;- s3://vibcon-waveforms/&lt;sha256&gt;.f32
+  sample_rate_hz    integer</pre>
+<div class="verdict v-ok"><b>Your Phase 2 SHA-256 requirement comes out of this for free.</b>
+You asked for records "stored immutably using a SHA-256 validation hash string". Store the
+file <i>under</i> its own digest and the hash is not metadata bolted on afterwards, it is
+the address. A file that does not hash to its own key is corrupt or altered, and anyone can
+check that without trusting me. Deduplication is free as well, and object storage is
+roughly an order of magnitude cheaper per GB than block storage on a Droplet.</div>
+<p class="note" style="margin-top:12px"><b>One caveat on "immutably".</b> A SHA-256 makes
+tampering detectable, not impossible. Whoever can rewrite the row can recompute the hash.
+If these records might one day have to be defended, the digests need to be append-only and
+anchored where the same party cannot silently rewrite them: an object-lock bucket, a
+signed digest-of-digests, or an external timestamp. That is a Phase 2 conversation, but
+the schema either leaves room for it or it does not.</p>
+</section>
+
+<!-- ============ ARCHITECTURE ============ -->
+<section id="p3" role="tabpanel" aria-labelledby="t3" hidden>
+<h2>Phase 1, drawn</h2>
+<p class="note">Two decisions in here are really Phase 3 and Phase 4 decisions. Both cost
+nothing now and are migrations later.</p>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 560" role="img" aria-label="VibCon Phase 1 architecture" class="svgfig" style="width:100%;height:auto;display:block">
+<defs><marker id="vc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+<path d="M0 0 L10 5 L0 10 z" fill="#8f857c"/></marker></defs>
+<rect class="bg" width="1000" height="560"/>
+
+<text class="h1" x="26" y="32">Phase 1: the waveform never enters the hypertable</text>
+<text class="sub" x="26" y="52">Green is TimescaleDB. Blue is object storage. Amber is a third party. Red is the thing requirement 1 rules out.</text>
+
+<text class="col" x="26" y="90">SITE</text>
+<rect class="edge" x="26" y="102" width="176" height="128" rx="8"/>
+<text class="lbl" x="40" y="124">Sensors and gateway</text>
+<text class="sub mono" x="40" y="144">device_ts + gateway_rx_ts</text>
+<text class="sub" x="40" y="163">both kept, so clock drift</text>
+<text class="sub" x="40" y="178">is visible instead of silent</text>
+<text class="sub mono" x="40" y="200">MQTT QoS 1</text>
+<text class="sub" x="40" y="218">at-least-once, so dedup</text>
+
+<path class="ln" d="M202 142 L252 142"/>
+<path class="ln" d="M202 190 L252 300"/>
+
+<text class="col" x="256" y="90">INGEST</text>
+<rect class="box" x="256" y="102" width="186" height="92" rx="8"/>
+<text class="lbl" x="270" y="124">Broker consumer</text>
+<text class="sub" x="270" y="143">batches, bounded queue</text>
+<text class="sub" x="270" y="158">backpressure, never drops</text>
+<text class="sub mono" x="270" y="180">COPY, ON CONFLICT DO NOTHING</text>
+
+<rect class="box" x="256" y="262" width="186" height="78" rx="8"/>
+<text class="lbl" x="270" y="284">Waveform PUT</text>
+<text class="sub" x="270" y="303">straight to object storage,</text>
+<text class="sub" x="270" y="318">never over the message bus</text>
+
+<path class="ln" d="M442 142 L496 142"/>
+<path class="ln" d="M442 300 L496 300"/>
+
+<text class="col" x="500" y="90">STORAGE, SPLIT BY SHAPE</text>
+<rect class="db" x="500" y="102" width="212" height="130" rx="8"/>
+<text class="lbl" x="514" y="124">telemetry hypertable</text>
+<text class="sub mono" x="514" y="144">~78 B per row</text>
+<text class="sub" x="514" y="163">mm/s, m/s2, Hz, peak amp,</text>
+<text class="sub" x="514" y="178">battery, 3-axis orientation</text>
+<text class="sub mono" x="514" y="200">unique (device_id, ts)</text>
+<text class="sub mono" x="514" y="220">compress after 7 days</text>
+
+<rect class="obj" x="500" y="262" width="212" height="130" rx="8"/>
+<text class="lbl" x="514" y="284">Spaces, content addressed</text>
+<text class="sub mono" x="514" y="304">key = sha256 of the file</text>
+<text class="sub" x="514" y="323">raw waveform, FFT arrays</text>
+<text class="sub mono" x="514" y="344">~1.47 MB per event</text>
+<text class="sub" x="514" y="363">the hash IS the integrity</text>
+<text class="sub" x="514" y="378">record, and dedup is free</text>
+
+<path class="ln" d="M606 232 L606 258"/>
+<text class="sub mono" x="616" y="250">digest + uri only</text>
+
+<text class="col" x="730" y="90">THIRD PARTY</text>
+<rect class="api" x="730" y="102" width="244" height="92" rx="8"/>
+<text class="lbl" x="744" y="124">Blastmanager REST</text>
+<text class="sub mono" x="744" y="144">blastmanager_id UNIQUE</text>
+<text class="sub" x="744" y="163">so a resync cannot duplicate.</text>
+<text class="sub" x="744" y="180">Raw body kept for audit</text>
+
+<rect class="api" x="730" y="212" width="244" height="68" rx="8"/>
+<text class="lbl" x="744" y="234">NGU geological vectors</text>
+<text class="sub" x="744" y="253">overlaid as Geomap layers,</text>
+<text class="sub" x="744" y="268">licence recorded</text>
+
+<rect class="box" x="730" y="298" width="244" height="94" rx="8"/>
+<text class="lbl" x="744" y="320">Grafana</text>
+<text class="sub" x="744" y="339">provisioned as code, not</text>
+<text class="sub" x="744" y="354">clicked together by hand</text>
+<text class="sub" x="744" y="374">Geomap corridors, panels, alerts</text>
+
+<path class="ln" d="M728 148 L716 148"/>
+<path class="ln" d="M712 167 L726 318"/>
+
+<rect class="no" x="26" y="416" width="446" height="118" rx="8"/>
+<text class="h2" x="40" y="438">What does NOT go in the hypertable</text>
+<text class="sub" x="40" y="459">A 1.47 MB array in a row becomes hundreds of TOAST chunks in a</text>
+<text class="sub" x="40" y="475">side relation. TimescaleDB compression cannot reach them, vacuum</text>
+<text class="sub" x="40" y="491">and backup carry the bulk, and chunk pruning stops helping.</text>
+<text class="sub mono" x="40" y="513">536 GB/yr of waveform vs 12 GB/yr of compressed telemetry</text>
+<text class="sub" x="40" y="529">at the sizing assumptions in 04_storage_math.md. Not a measurement of your system.</text>
+
+<rect class="box" x="490" y="416" width="484" height="118" rx="8"/>
+<text class="h2" x="504" y="438">Two Phase 1 decisions that are really Phase 3 and 4 decisions</text>
+<text class="sub" x="504" y="459">site.geog carries lat/lon from day one, so the perimeter schedule can be</text>
+<text class="sub" x="504" y="475">computed from civil dusk instead of a wall clock. See 01_solar_schedule.md.</text>
+<text class="sub" x="504" y="496">limit_rule stores the NS 8141 edition as versioned data, so an assessment</text>
+<text class="sub" x="504" y="512">records which rule judged it and history stays explainable.</text>
+<text class="sub mono" x="504" y="530">neither costs anything now; both are migrations later</text>
+</svg>
+</section>
+
+<!-- ============ HARDWARE ============ -->
+<section id="p4" role="tabpanel" aria-labelledby="t4" hidden>
+<h2>Two things to settle before Phase 3 and Phase 4 are scoped</h2>
+
+<h3>The EYE does not speak LoRaWAN</h3>
+<blockquote>"Integrate wireless <b>MQTT/LoRaWAN</b> gateway inputs from White-Label VibCon
+Sensors (<b>Teltonika EYE</b> hardware)"</blockquote>
+<p class="note">The Teltonika EYE (BTSMP1) is a <b>Bluetooth Low Energy</b> device:
+iBeacon and Eddystone plus a proprietary mode, temperature, humidity, accelerometer,
+magnet detect, about 80 m range, multi-year coin cell. There is no LoRaWAN radio in it,
+and LoRaWAN is not a firmware option on a BLE part.</p>
+<pre>  EYE (BLE) --> BLE gateway --> MQTT over the gateway's backhaul --> broker
+                every ~80 m line of sight, less across plant and rock faces
+
+  LoRaWAN would be kilometres from one gateway, but needs a different sensor.</pre>
+<p class="note">That is a capital decision, not a software one: the radio decides how many
+gateways you buy. It should be settled before Phase 3 is scoped rather than during it.</p>
+
+<h3>And a question I am not going to answer for you</h3>
+<div class="verdict v-bad">Phase 1 wants mm/s, a dominant frequency, a full FFT and raw
+waveforms. That is seismograph-class instrumentation: a tri-axial geophone sampling in the
+kilohertz range with a triggered recorder. The EYE's accelerometer is a movement sensor on
+a beacon, which is right for "has this gate moved" and wrong for "what was the peak
+particle velocity at the foundation during that blast".
+<br><br><b>Are the Phase 1 vibration sensors and the Phase 3 perimeter sensors the same
+hardware?</b> If they are, Phase 1 cannot produce the five channels it asks for, and that
+is worth knowing before the milestone is funded. If they are two different white-labelled
+products, one sentence from you closes this and I will stop raising it.</div>
+
+<h3>NS 8141: which edition?</h3>
+<p class="note">Phase 4 wants the NS 8141 formula automated. Before a line of that is
+written, one thing has to be recorded in the system: <b>which edition</b>. The public
+record disagrees with itself, so I am not going to pick the confident-sounding answer.</p>
+<div class="card" style="padding:0"><div class="scroll"><table>
+<thead><tr><th>Source</th><th>Says</th></tr></thead>
+<tbody>
+<tr><td>Norwegian Tunnelling Society presentation</td><td><b>Part 1 (blasting) was withdrawn in 2016</b> after objections to its limits and frequency filter; NS 8141:2001 used afterwards</td></tr>
+<tr><td>One standards retailer</td><td>NS 8141:2001 listed as <b>withdrawn</b></td></tr>
+<tr><td>Another standards retailer</td><td>NS 8141-1:<b>2022</b> listed as current</td></tr>
+<tr><td>NGV 2022 conference</td><td>A revision that <b>removes the frequency filter</b> and simplifies adjustment factors</td></tr>
+</tbody></table></div></div>
+<div class="verdict v-bad" style="margin-top:14px"><b>The frequency filter is the point.</b>
+If one edition applies a frequency-dependent correction and another does not, the same
+waveform yields a different limit under each. Hard-code one formula and the system
+silently produces the wrong verdict the moment the standard moves, for every historical
+record as well. <b>Standard Norge is the authority and your consultants already know which
+edition they work to.</b> One sentence from you settles it.</div>
+<pre>  limit_rule   standard, edition, effective_from/to, parameters jsonb, source_note
+  assessment   event, limit_rule_id, measured_ppv, computed_limit, verdict</pre>
+<p class="note">Every assessment records <b>which rule judged it</b>. An edition change
+adds a row rather than a deploy, and a record from 2027 is still explainable in 2031.
+Same discipline as your Phase 2 hashing, applied to the rules instead of the data.</p>
+<p class="note"><b>One measurement note.</b> NS 8141's limits apply at the <b>foundation of
+the structure being protected</b>, not at the quarry face and not wherever a sensor
+happened to be mounted. So the schema records what each sensor is bolted to, otherwise a
+compliance report measures the right quantity in the wrong place.</p>
+</section>
+
+<!-- ============ SCOPE ============ -->
+<section id="p5" role="tabpanel" aria-labelledby="t5" hidden>
+<h2>Phase 1, scoped</h2>
+<div class="card" style="padding:0"><div class="scroll"><table>
+<thead><tr><th>Work</th><th class="n">Hours</th></tr></thead>
+<tbody>
+<tr><td>Droplet, containers, TimescaleDB, PostGIS, backup and restore drill</td><td class="n">14</td></tr>
+<tr><td>Schema, hypertable, compression and retention policies, migrations</td><td class="n">16</td></tr>
+<tr><td>Ingest: broker, batching, idempotency, backpressure, object storage</td><td class="n">22</td></tr>
+<tr><td>Blastmanager sync: auth, pagination, retry, raw-body retention, resync</td><td class="n">16</td></tr>
+<tr><td>Grafana provisioned as code, Geomap, NGU vector overlay, panels</td><td class="n">18</td></tr>
+<tr><td>Invoicing: continuous aggregate, date-frame export, file output</td><td class="n">10</td></tr>
+<tr><td>Load test at 10x, and tuning until it passes</td><td class="n">12</td></tr>
+<tr><td>Documentation, runbook, restore procedure, handover</td><td class="n">10</td></tr>
+<tr class="hl"><td><b>Total</b></td><td class="n"><b>118</b></td></tr>
+</tbody></table></div></div>
+<p class="note" style="margin-top:12px">Fixed price inside your posted Phase 1 range, in
+NOK, released from escrow on the milestone. The hours are shown so you can see what the
+number is made of, not because I would be billing them.</p>
+
+<h3>What requirement 1 means in numbers, not adjectives</h3>
+<p class="note">"No performance lag" is not a test. These five are, and they go in the
+handover. If any of them misses, it is my problem and not a change request.</p>
+<ul>
+<li>Sustained rows per second at the target concurrency</li>
+<li>p99 insert latency under that load</li>
+<li>Query latency on a 30-day Grafana panel <b>while ingestion continues</b></li>
+<li>Disk growth per day, extrapolated to twelve months</li>
+<li>All four again <b>after compression kicks in</b></li>
+</ul>
+
+<h3>What I need before Phase 1 starts</h3>
+<div class="card" style="padding:0"><div class="scroll"><table>
+<tbody>
+<tr><td><b>Blastmanager API docs</b></td><td>auth, rate limits, pagination, webhooks. First thing</td></tr>
+<tr><td>Sample payloads</td><td>one real telemetry message, one real waveform file</td></tr>
+<tr><td>Sample rate, event length, sensor count</td><td>turns the sizing above into real numbers</td></tr>
+<tr><td>NGU layer choice and licence terms</td><td>which vector channels</td></tr>
+<tr><td><b>The sensor question</b></td><td>same hardware for Phase 1 and Phase 3, or two products?</td></tr>
+</tbody></table></div></div>
+
+<h3>On ownership</h3>
+<p class="note">Agreed without qualification: your repository, your environment, yours as
+it is written rather than on final payment. No private copy, nothing reused elsewhere. Two
+practical notes that protect you rather than me. Open-source dependencies keep their own
+licences, so I keep a manifest listing each, and your ownership of the code never gets
+confused with ownership of PostgreSQL or Grafana. And I would rather be added to your
+GitHub or GitLab on day one than hand over a zip at the end, because that makes the
+ownership claim continuously true instead of a transfer event.</p>
+
+<footer>Solar figures computed with the NOAA algorithm at 60.2033 N, 10.7211 E and
+validated against published Oslo times; 49 tests in 09_validation.py. Hardware figures from
+Teltonika's published BTSMP1 datasheet. NS 8141 status from four public sources that
+disagree, quoted rather than resolved. Storage figures are labelled assumptions, not
+measurements. No access to any VibCon system was used or requested.</footer>
+</section>
+</div>
+
+<script>
+(function(){
+"use strict";
+var tabs=[].slice.call(document.querySelectorAll('nav [role=tab]'));
+function show(id){tabs.forEach(function(t){var s=t.id===id;
+ t.setAttribute('aria-selected',s?'true':'false');
+ document.getElementById(t.getAttribute('aria-controls')).hidden=!s;});}
+tabs.forEach(function(t){t.addEventListener('click',function(){show(t.id);});});
+
+var root=document.documentElement,tg=document.getElementById('theme');
+function cur(){var a=root.getAttribute('data-theme');
+ return a||(window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');}
+function paint(){tg.textContent=cur()==='dark'?'light':'dark';}
+tg.addEventListener('click',function(){root.setAttribute('data-theme',cur()==='dark'?'light':'dark');paint();});
+paint();
+
+/* ---- NOAA solar, same algorithm as 02_sun_schedule.py ---- */
+var LAT=60.2033, LON=10.7211, ARM=18.0, DISARM=6.5;
+var R=Math.PI/180;
+function julian(y,m,d){ if(m<=2){y-=1;m+=12;}
+ var a=Math.floor(y/100), b=2-a+Math.floor(a/4);
+ return Math.floor(365.25*(y+4716))+Math.floor(30.6001*(m+1))+d+b-1524.5; }
+function crossings(y,m,d,elev){
+ var jc=(julian(y,m,d)-2451545.0)/36525.0;
+ var gml=(280.46646+jc*(36000.76983+jc*0.0003032))%360;
+ var gma=357.52911+jc*(35999.05029-0.0001537*jc);
+ var ecc=0.016708634-jc*(0.000042037+0.0000001267*jc);
+ var c=Math.sin(gma*R)*(1.914602-jc*(0.004817+0.000014*jc))
+      +Math.sin(2*gma*R)*(0.019993-0.000101*jc)+Math.sin(3*gma*R)*0.000289;
+ var tl=gml+c, al=tl-0.00569-0.00478*Math.sin((125.04-1934.136*jc)*R);
+ var ob=23+(26+(21.448-jc*(46.815+jc*(0.00059-jc*0.001813)))/60)/60;
+ var oc=ob+0.00256*Math.cos((125.04-1934.136*jc)*R);
+ var decl=Math.asin(Math.sin(oc*R)*Math.sin(al*R))/R;
+ var vy=Math.pow(Math.tan(oc*R/2),2);
+ var eot=4*(vy*Math.sin(2*gml*R)-2*ecc*Math.sin(gma*R)
+       +4*ecc*vy*Math.sin(gma*R)*Math.cos(2*gml*R)
+       -0.5*vy*vy*Math.sin(4*gml*R)-1.25*ecc*ecc*Math.sin(2*gma*R))/R;
+ var x=Math.cos((90-elev)*R)/(Math.cos(LAT*R)*Math.cos(decl*R))-Math.tan(LAT*R)*Math.tan(decl*R);
+ if(x<-1||x>1) return ((90-Math.abs(LAT-decl))>elev)?'UP':'DOWN';
+ var ha=Math.acos(x)/R, noon=(720-4*LON-eot)/60;
+ return [noon-ha/15, noon+ha/15];
+}
+function lastSunday(y,mo){ var d=new Date(Date.UTC(y,mo,0));
+ while(d.getUTCDay()!==0){d.setUTCDate(d.getUTCDate()-1);} return d; }
+function offset(y,mo,da){ var t=Date.UTC(y,mo-1,da);
+ return (t>=lastSunday(y,3).getTime() && t<lastSunday(y,10).getTime())?2:1; }
+function mod24(h){ return ((h%24)+24)%24; }
+function hhmm(h){ h=mod24(h); var m=Math.round((h%1)*60), hh=Math.floor(h);
+ if(m===60){m=0;hh=(hh+1)%24;} return (hh<10?'0':'')+hh+':'+(m<10?'0':'')+m; }
+
+function darkWindows(y,m,d){
+ var r=crossings(y,m,d,-0.833);
+ if(r==='UP') return [];
+ if(r==='DOWN') return [[0,24]];
+ var o=offset(y,m,d), rise=mod24(r[0]+o), set=mod24(r[1]+o);
+ if(rise<=set) return [[0,rise],[set,24]];
+ return [[set,rise]];
+}
+function overlap(a,b){ return Math.max(0,Math.min(a[1],b[1])-Math.max(a[0],b[0])); }
+function invert(w){ var out=[],c=0,i;
+ w=w.slice().sort(function(p,q){return p[0]-q[0];});
+ for(i=0;i<w.length;i++){ if(w[i][0]>c) out.push([c,w[i][0]]); c=Math.max(c,w[i][1]); }
+ if(c<24) out.push([c,24]); return out; }
+
+var tl=document.getElementById('tl'), sv=document.getElementById('sv'),
+    dIn=document.getElementById('d'), sl=document.getElementById('slider');
+function seg(cls,s,e,style){
+ var el=document.createElement('div');
+ el.className=cls; el.style.left=(s/24*100)+'%'; el.style.width=((e-s)/24*100)+'%';
+ if(style) el.setAttribute('style', el.getAttribute('style')+';'+style);
+ tl.appendChild(el); }
+
+function draw(){
+ var p=dIn.value.split('-'), y=+p[0], m=+p[1], da=+p[2];
+ var dark=darkWindows(y,m,da), light=invert(dark);
+ var armed=(ARM>DISARM)?[[ARM,24],[0,DISARM]]:[[ARM,DISARM]];
+ tl.innerHTML='';
+ light.forEach(function(w){ seg('seg day',w[0],w[1]); });
+ dark.forEach(function(w){ seg('seg night',w[0],w[1]); });
+ armed.forEach(function(w){ seg('armed',w[0],w[1]); });
+ var dayArmed=0, darkOpen=0, i, j;
+ for(i=0;i<armed.length;i++) for(j=0;j<light.length;j++){
+   var o=overlap(armed[i],light[j]);
+   if(o>0){ dayArmed+=o; seg('errD',Math.max(armed[i][0],light[j][0]),Math.min(armed[i][1],light[j][1])); } }
+ for(i=0;i<dark.length;i++){
+   var rest=[[dark[i][0],dark[i][1]]];
+   for(j=0;j<armed.length;j++){
+     var nr=[];
+     rest.forEach(function(s){
+       if(armed[j][1]<=s[0]||armed[j][0]>=s[1]){ nr.push(s); return; }
+       if(armed[j][0]>s[0]) nr.push([s[0],armed[j][0]]);
+       if(armed[j][1]<s[1]) nr.push([armed[j][1],s[1]]);
+     });
+     rest=nr;
+   }
+   rest.forEach(function(s){ if(s[1]-s[0]>0.001){ darkOpen+=s[1]-s[0]; seg('errN',s[0],s[1]); } });
+ }
+ var r=crossings(y,m,da,-0.833), o=offset(y,m,da), times;
+ times=(typeof r==='string')?(r==='UP'?'sun never sets':'sun never rises')
+    :('sunrise '+hhmm(r[0]+o)+', sunset '+hhmm(r[1]+o));
+ var bits=[];
+ if(dayArmed>0.02) bits.push('<b>'+dayArmed.toFixed(1)+' h of floodlights armed in daylight</b>');
+ if(darkOpen>0.02) bits.push('<b>'+darkOpen.toFixed(1)+' h of darkness with the perimeter disarmed</b>');
+ sv.className='verdict '+((darkOpen>0.02)?'v-bad':(dayArmed>0.02?'v-bad':'v-ok'));
+ sv.innerHTML=times+' (UTC+'+o+'). '+(bits.length?bits.join(', and ')+'.':'The fixed window happens to fit today.');
+}
+function sync(from){
+ if(from==='slider'){
+   var dt=new Date(Date.UTC(2026,0,1)); dt.setUTCDate(dt.getUTCDate()+(+sl.value));
+   dIn.value=dt.toISOString().slice(0,10);
+ } else {
+   var p=dIn.value.split('-');
+   if(p.length!==3||!p[0]) return;
+   var n=Math.round((Date.UTC(+p[0],+p[1]-1,+p[2])-Date.UTC(2026,0,1))/86400000);
+   if(n>=0&&n<=364) sl.value=n;
+ }
+ draw();
+}
+sl.addEventListener('input',function(){sync('slider');});
+dIn.addEventListener('input',function(){sync('date');});
+draw();
+})();
+</script>
+
+</body>
+</html>
